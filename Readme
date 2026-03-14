@@ -1,8 +1,8 @@
 # 📧 Group Email Summarizer — AI Automation
 
-An AI-powered dashboard that reads Gmail group email threads and produces a clean summary with action items, owners, follow-up dates, and topic insights.
+An NLP-powered dashboard that reads email group threads and produces a clean summary with action items, owners, follow-up dates, and topic insights.
 
-**Stack:** Python · Gmail API · Google Gemini · Streamlit
+**Stack:** Python · sumy · nltk · Streamlit · Pandas
 
 ---
 
@@ -15,12 +15,12 @@ email-summarizer-ai/
 ├── requirements.txt         ← Python dependencies
 │
 ├── config/
-│   └── config.py            ← API keys and settings
+│   └── config.py            ← Settings and file paths
 │
 ├── services/
-│   ├── email_reader.py      ← Gmail API: connect + fetch threads
-│   ├── summarizer.py        ← Gemini AI: summarize thread
-│   └── extractor.py         ← Gemini AI: extract topic/actions/owner
+│   ├── email_reader.py      ← Reads emails from CSV dataset
+│   ├── summarizer.py        ← NLP summarization using sumy
+│   └── extractor.py         ← Extracts topic/actions/owner using nltk
 │
 ├── dashboard/
 │   └── dashboard.py         ← Streamlit dashboard
@@ -29,6 +29,7 @@ email-summarizer-ai/
 │   └── helper.py            ← Text cleaning utilities
 │
 ├── data/
+│   ├── emails.csv           ← Input email dataset
 │   └── email_summary.csv    ← Auto-generated output
 │
 └── README.md
@@ -40,20 +41,13 @@ email-summarizer-ai/
 
 ### 1. Install dependencies
 ```bash
-pip install -r requirements.txt
+pip install pandas streamlit sumy nltk
 ```
 
-### 2. Get Gmail API credentials
-1. Go to [console.cloud.google.com](https://console.cloud.google.com)
-2. Create project → Enable **Gmail API**
-3. Go to **Credentials** → Create **OAuth 2.0 Client ID** (Desktop app)
-4. Download JSON → rename to `credentials.json`
-5. Place in the **root** of the project folder
-
-### 3. Get Gemini API key (Free)
-1. Go to [aistudio.google.com](https://aistudio.google.com)
-2. Click **Get API Key** → Copy it
-3. Paste into `config/config.py` → `GEMINI_API_KEY`
+### 2. Download nltk data
+```bash
+python -m nltk.downloader punkt punkt_tab averaged_perceptron_tagger
+```
 
 ---
 
@@ -76,19 +70,17 @@ Opens at: http://localhost:8501
 ## 🔄 Workflow
 
 ```
-Gmail Group Inbox
+Email Dataset (CSV)
        ↓
-Gmail API (email_reader.py)
+email_reader.py  →  Read & parse emails
        ↓
-Python Processing (app.py)
+summarizer.py    →  NLP summarization (sumy LSA)
        ↓
-Gemini AI — Summarization (summarizer.py)
+extractor.py     →  Extract topic, actions, owner (nltk)
        ↓
-Gemini AI — Extraction (extractor.py)
+data/email_summary.csv
        ↓
-Save to CSV (data/email_summary.csv)
-       ↓
-Streamlit Dashboard (dashboard.py)
+dashboard.py     →  Streamlit Dashboard
 ```
 
 ---
@@ -97,16 +89,32 @@ Streamlit Dashboard (dashboard.py)
 
 | Tab | Features |
 |---|---|
-| 📋 Summary Table | Colour-coded table: Thread, Topic, Actions, Owner, Priority |
+| 📋 Summary Table | Email Thread · Key Topic · Action Items · Owner · Priority |
 | 🧵 Thread Details | Expandable cards per thread with full analysis |
-| 📊 Insights | Priority chart · Owner chart · Top tags · Pending follow-ups |
+| 📊 Insights | Priority chart · Owner chart · Topic tags |
 
 ---
 
-## 🔒 Security
-Add to `.gitignore` before pushing to GitHub:
-```
-credentials.json
-token.json
-data/
-```
+## ✅ Task Completion
+
+| Requirement | Status |
+|---|---|
+| Read incoming emails of email group | ✅ Done |
+| Create summary of email threads | ✅ Done (sumy NLP) |
+| Email Thread column | ✅ Done |
+| Key Topic column | ✅ Done |
+| Action Items column | ✅ Done |
+| Owner column | ✅ Done |
+| Single Dashboard | ✅ Done (Streamlit) |
+| Topic Insights | ✅ Done |
+| Tasks & Follow-ups | ✅ Done |
+
+---
+
+## 🛠️ Tools & Libraries Used
+
+- **Python** — core programming
+- **sumy** — NLP-based email summarization
+- **nltk** — natural language processing for name/action extraction
+- **Pandas** — data processing and CSV handling
+- **Streamlit** — interactive dashboard UI
