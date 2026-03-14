@@ -1,0 +1,112 @@
+# 📧 Group Email Summarizer — AI Automation
+
+An AI-powered dashboard that reads Gmail group email threads and produces a clean summary with action items, owners, follow-up dates, and topic insights.
+
+**Stack:** Python · Gmail API · Google Gemini · Streamlit
+
+---
+
+## 🗂️ Project Structure
+
+```
+email-summarizer-ai/
+│
+├── app.py                   ← Main pipeline (run this first)
+├── requirements.txt         ← Python dependencies
+│
+├── config/
+│   └── config.py            ← API keys and settings
+│
+├── services/
+│   ├── email_reader.py      ← Gmail API: connect + fetch threads
+│   ├── summarizer.py        ← Gemini AI: summarize thread
+│   └── extractor.py         ← Gemini AI: extract topic/actions/owner
+│
+├── dashboard/
+│   └── dashboard.py         ← Streamlit dashboard
+│
+├── utils/
+│   └── helper.py            ← Text cleaning utilities
+│
+├── data/
+│   └── email_summary.csv    ← Auto-generated output
+│
+└── README.md
+```
+
+---
+
+## ⚙️ Setup
+
+### 1. Install dependencies
+```bash
+pip install -r requirements.txt
+```
+
+### 2. Get Gmail API credentials
+1. Go to [console.cloud.google.com](https://console.cloud.google.com)
+2. Create project → Enable **Gmail API**
+3. Go to **Credentials** → Create **OAuth 2.0 Client ID** (Desktop app)
+4. Download JSON → rename to `credentials.json`
+5. Place in the **root** of the project folder
+
+### 3. Get Gemini API key (Free)
+1. Go to [aistudio.google.com](https://aistudio.google.com)
+2. Click **Get API Key** → Copy it
+3. Paste into `config/config.py` → `GEMINI_API_KEY`
+
+---
+
+## 🚀 Running the App
+
+### Step 1 — Run the pipeline
+```bash
+python app.py
+```
+
+### Step 2 — Launch the dashboard
+```bash
+streamlit run dashboard/dashboard.py
+```
+
+Opens at: http://localhost:8501
+
+---
+
+## 🔄 Workflow
+
+```
+Gmail Group Inbox
+       ↓
+Gmail API (email_reader.py)
+       ↓
+Python Processing (app.py)
+       ↓
+Gemini AI — Summarization (summarizer.py)
+       ↓
+Gemini AI — Extraction (extractor.py)
+       ↓
+Save to CSV (data/email_summary.csv)
+       ↓
+Streamlit Dashboard (dashboard.py)
+```
+
+---
+
+## 🖥️ Dashboard Features
+
+| Tab | Features |
+|---|---|
+| 📋 Summary Table | Colour-coded table: Thread, Topic, Actions, Owner, Priority |
+| 🧵 Thread Details | Expandable cards per thread with full analysis |
+| 📊 Insights | Priority chart · Owner chart · Top tags · Pending follow-ups |
+
+---
+
+## 🔒 Security
+Add to `.gitignore` before pushing to GitHub:
+```
+credentials.json
+token.json
+data/
+```

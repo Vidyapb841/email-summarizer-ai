@@ -1,0 +1,4 @@
+message_id,subject,from,to,date,body
+1,Project Launch Timeline,rahul@company.com,team@company.com,2024-01-15,"Hi team, We need to finalize the project launch timeline. Rahul will prepare the release notes by Friday. Priya will coordinate with the testing team. Please confirm your availability for the launch meeting next Monday."
+2,Budget Approval Q1,john@company.com,finance@company.com,2024-01-16,"Hi Finance team, Attached is the revised Q1 budget proposal. John will send the updated numbers by tomorrow. Sarah needs to approve the marketing spend of $50000. Please review and revert by end of week."
+3,Client Meeting Follow-up,priya@company.com,sales@company.com,2024-01-17,"Team, Following up on the client meeting with ABC Corp. Action items: 1) Amit to send product demo by Wednesday 2) Neha to prepare pricing proposal 3) Follow up call scheduled for Jan 25. Client is interested in the enterprise plan."
