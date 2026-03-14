@@ -38,9 +38,6 @@ st.markdown("""
 </style>
 <div class="header">
     <h1 style="margin:0">📧 Group Email Summarizer Dashboard</h1>
-    <p style="margin:0.3rem 0 0; opacity:0.85;">
-        Powered by Gmail API · Google Gemini AI · Python · Streamlit
-    </p>
 </div>
 """, unsafe_allow_html=True)
 

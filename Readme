@@ -1,10 +1,34 @@
-# 📧 Group Email Summarizer — AI Automation
+📧 Group Email Summarizer — AI Automation
 
-An NLP-powered dashboard that reads email group threads and produces a clean summary with action items, owners, follow-up dates, and topic insights.
+> An NLP-powered dashboard that reads real corporate email threads, extracts action items, owners, and topic insights, and presents everything in a single interactive dashboard.
 
-**Stack:** Python · sumy · nltk · Streamlit · Pandas
+## 🎯 Problem Statement
 
----
+In modern organizations, email groups generate hundreds of parallel conversations daily. Teams struggle to track action items, identify owners, and follow up on pending tasks. This project solves that by creating a single AI-powered dashboard that makes sense of all ongoing email conversations automatically.
+
+## ✨ Features
+
+- 📥 Reads real corporate email threads from the Enron Email Dataset
+- 🤖 NLP-based summarization using sumy LSA algorithm
+- 🔍 Extracts Key Topic, Action Items, Owner, Follow-up Dates automatically
+- 🚦 Auto-detects Priority — High, Medium, Low based on urgency keywords
+- 📊 Interactive 3-tab Streamlit dashboard with charts and filters
+- 💾 Export results to CSV with one click
+- 🔌 Fully offline — no API key or internet required
+- ♾️ Zero quota limits — runs unlimited times
+
+
+## 🛠️ Tech Stack
+
+| Tool | Purpose |
+|---|---|
+| Python | Core programming language |
+| sumy (LSA) | NLP-based email summarization |
+| nltk | POS tagging and owner detection |
+| Streamlit | Interactive dashboard UI |
+| Pandas | Data processing and CSV handling |
+| Regex (re) | Action item and date pattern extraction |
+
 
 ## 🗂️ Project Structure
 
@@ -12,6 +36,7 @@ An NLP-powered dashboard that reads email group threads and produces a clean sum
 email-summarizer-ai/
 │
 ├── app.py                   ← Main pipeline (run this first)
+├── prepare_data.py          ← Extracts 200 clean rows from Enron dataset
 ├── requirements.txt         ← Python dependencies
 │
 ├── config/
@@ -19,102 +44,127 @@ email-summarizer-ai/
 │
 ├── services/
 │   ├── email_reader.py      ← Reads emails from CSV dataset
-│   ├── summarizer.py        ← NLP summarization using sumy
-│   └── extractor.py         ← Extracts topic/actions/owner using nltk
+│   ├── summarizer.py        ← NLP summarization using sumy LSA
+│   └── extractor.py         ← Extracts topic, actions, owner using nltk
 │
 ├── dashboard/
 │   └── dashboard.py         ← Streamlit dashboard
 │
 ├── utils/
-│   └── helper.py            ← Text cleaning utilities
+│   └── helper.py            ← Text cleaning and preprocessing
 │
-├── data/
-│   ├── emails.csv           ← Input email dataset
-│   └── email_summary.csv    ← Auto-generated output
-│
-└── README.md
-```
+└── data/
+    ├── emails.csv           ← Input dataset (download separately)
+    └── email_summary.csv    ← Auto-generated output
 
----
 
-## ⚙️ Setup
 
-### 1. Install dependencies
+## ⚙️ Setup & Installation
+
+### Step 1 — Clone the repository
 ```bash
-pip install pandas streamlit sumy nltk
+git clone https://github.com/[username]/email-summarizer-ai.git
+cd email-summarizer-ai
 ```
 
-### 2. Download nltk data
+### Step 2 — Create virtual environment
+```bash
+python -m venv venv
+venv\Scripts\activate        # Windows
+source venv/bin/activate     # Mac/Linux
+```
+
+### Step 3 — Install dependencies
+```bash
+pip install -r requirements.txt
+```
+
+### Step 4 — Download nltk data
 ```bash
 python -m nltk.downloader punkt punkt_tab averaged_perceptron_tagger
-```
 
----
+
+### Step 5 — Download the dataset
+Download the Enron Email Dataset from Kaggle:
+👉 https://www.kaggle.com/datasets/wcukierski/enron-email-dataset
+
+Place `emails.csv` inside the `data/` folder.
+
 
 ## 🚀 Running the App
 
-### Step 1 — Run the pipeline
+### Step 1 — Extract 200 clean emails from dataset
+```bash
+python prepare_data.py
+```
+
+### Step 2 — Run the NLP pipeline
 ```bash
 python app.py
 ```
 
-### Step 2 — Launch the dashboard
+### Step 3 — Launch the dashboard
 ```bash
 streamlit run dashboard/dashboard.py
 ```
 
-Opens at: http://localhost:8501
+Dashboard opens at 👉 **http://localhost:8501**
 
----
 
-## 🔄 Workflow
+## 🔄 System Workflow
 
-```
-Email Dataset (CSV)
-       ↓
-email_reader.py  →  Read & parse emails
-       ↓
-summarizer.py    →  NLP summarization (sumy LSA)
-       ↓
-extractor.py     →  Extract topic, actions, owner (nltk)
-       ↓
+Enron Email Dataset (emails.csv)
+           ↓
+email_reader.py   →   Read & parse email threads
+           ↓
+helper.py         →   Clean & preprocess text
+           ↓
+summarizer.py     →   NLP summarization (sumy LSA)
+           ↓
+extractor.py      →   Extract topic, actions, owner, priority
+           ↓
 data/email_summary.csv
-       ↓
-dashboard.py     →  Streamlit Dashboard
-```
+           ↓
+dashboard.py      →   Streamlit Dashboard (localhost:8501)
 
----
 
-## 🖥️ Dashboard Features
+## 🖥️ Dashboard Preview
 
 | Tab | Features |
 |---|---|
-| 📋 Summary Table | Email Thread · Key Topic · Action Items · Owner · Priority |
-| 🧵 Thread Details | Expandable cards per thread with full analysis |
-| 📊 Insights | Priority chart · Owner chart · Topic tags |
+| 📋 Summary Table | Email Thread · Key Topic · Action Items · Owner · Priority · Tags |
+| 🧵 Thread Details | Expandable cards per thread with full NLP summary and analysis |
+| 📊 Insights | Priority chart · Action items by owner · Topic tags · Follow-ups |
 
 ---
 
-## ✅ Task Completion
+## ✅ Task Requirements Fulfilled
 
 | Requirement | Status |
 |---|---|
-| Read incoming emails of email group | ✅ Done |
-| Create summary of email threads | ✅ Done (sumy NLP) |
-| Email Thread column | ✅ Done |
-| Key Topic column | ✅ Done |
-| Action Items column | ✅ Done |
-| Owner column | ✅ Done |
-| Single Dashboard | ✅ Done (Streamlit) |
-| Topic Insights | ✅ Done |
-| Tasks & Follow-ups | ✅ Done |
+| Read incoming emails of email group | ✅ Completed |
+| Create summary of email threads | ✅ Completed — sumy LSA NLP |
+| Email Thread column | ✅ Completed |
+| Key Topic column | ✅ Completed — NLP content analysis |
+| Action Items column | ✅ Completed — 28 regex patterns |
+| Owner column | ✅ Completed — nltk POS tagging |
+| Single Dashboard | ✅ Completed — Streamlit |
+| Topic Insights | ✅ Completed |
+| Tasks and Follow-ups | ✅ Completed |
 
----
 
-## 🛠️ Tools & Libraries Used
+## 🧠 NLP Concepts Used
 
-- **Python** — core programming
-- **sumy** — NLP-based email summarization
-- **nltk** — natural language processing for name/action extraction
-- **Pandas** — data processing and CSV handling
-- **Streamlit** — interactive dashboard UI
+- **LSA (Latent Semantic Analysis)** — Identifies most important sentences mathematically
+- **POS Tagging** — Detects proper nouns for owner identification
+- **Regex Pattern Matching** — 28 action patterns and 10 date patterns
+- **Keyword Classification** — Auto-assigns High, Medium, Low priority
+- **Named Entity Detection** — Finds responsible person from email content
+
+
+## ⚠️ Note on Dataset
+
+The Enron dataset file `emails.csv` is not included in this repository due to its large size (500MB+). Please download it from Kaggle and place it in the `data/` folder before running the project.
+
+👉 https://www.kaggle.com/datasets/wcukierski/enron-email-dataset
+
